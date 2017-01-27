@@ -16,7 +16,7 @@ def multi_run (epoch=10):
     fn = 0
     for i in range (20000):
         print ("Processing " + str (i+1))
-        file_name = ("node_distances/" + str(index_file))
+        file_name = ("node_distances/" + str(i+1))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
             pred, truth = run (i, epoch = epoch)
             pred = pred[0][0]
