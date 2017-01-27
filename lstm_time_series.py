@@ -19,6 +19,8 @@ def multi_run (epoch=10):
         file_name = ("node_distances/" + str(index_file))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
             pred, truth = run (i, epoch = epoch)
+            pred = pred[0][0]
+            truth = truth[0][0]
             if pred >= 0 and truth >= 0:
                 tp += 1
             elif pred <0 and truth < 0:
