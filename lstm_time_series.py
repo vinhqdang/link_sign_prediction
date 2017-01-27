@@ -14,7 +14,8 @@ def multi_run (epoch=10):
     tn = 0
     fp = 0
     fn = 0
-    for i in range (100000):
+    for i in range (20000):
+        print ("Processing " + str (i+1))
         file_name = ("node_distances/" + str(index_file))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
             pred, truth = run (i, epoch = epoch)
@@ -26,7 +27,7 @@ def multi_run (epoch=10):
                 fp += 1
             elif pred <= 0 and truth >= 0:
                 fn += 1
-    print (tp,tn,fp,fn)
+        print (tp,tn,fp,fn)
     return (tp,tn,fp,fn)
 
 def run (index_file, epoch = 10):
