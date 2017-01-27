@@ -18,7 +18,7 @@ def multi_run (epoch=10):
         print ("Processing " + str (i+1))
         file_name = ("node_distances/" + str(i+1))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
-            yt = load_data("node_distances/" + str(index_file))
+            yt = load_data("node_distances/" + str(i+1))
             if (len(yt) <= 10):
                 continue
             pred, truth = run (i, epoch = epoch)
