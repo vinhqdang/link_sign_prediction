@@ -19,19 +19,18 @@ def multi_run (epoch=10):
         file_name = ("node_distances/" + str(i+1))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
             yt = load_data("node_distances/" + str(i+1))
-            if (len(yt) <= 10):
-                continue
-            pred, truth = run (i, epoch = epoch)
-            pred = pred[0][0]
-            truth = truth[0][0]
-            if pred >= 0 and truth >= 0:
-                tp += 1
-            elif pred <0 and truth < 0:
-                tn += 1
-            elif pred >= 0 and truth < 0:
-                fp += 1
-            elif pred <= 0 and truth >= 0:
-                fn += 1
+            if len(yt) >= 10:
+                pred, truth = run (i, epoch = epoch)
+                pred = pred[0][0]
+                truth = truth[0][0]
+                if pred >= 0 and truth >= 0:
+                    tp += 1
+                elif pred <0 and truth < 0:
+                    tn += 1
+                elif pred >= 0 and truth < 0:
+                    fp += 1
+                elif pred <= 0 and truth >= 0:
+                    fn += 1
         print (tp,tn,fp,fn)
     return (tp,tn,fp,fn)
 
