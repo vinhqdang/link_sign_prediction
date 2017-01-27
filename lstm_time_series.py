@@ -8,12 +8,34 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
 
+def multi_run (epoch=10):
+    run_cnt = 0
+    tp = 0
+    tn = 0
+    fp = 0
+    fn = 0
+    for i in range (100000):
+        file_name = ("node_distances/" + str(index_file))
+        if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
+            pred, truth = run (i, epoch = epoch)
+            if pred >= 0 and truth >= 0:
+                tp += 1
+            elif pred <0 and truth < 0:
+                tn += 1
+            elif pred >= 0 and truth < 0:
+                fp += 1
+            elif pred <= 0 and truth >= 0:
+                fn += 1
+    print (tp,tn,fp,fn)
+    return (tp,tn,fp,fn)
+
 def run (index_file, epoch = 10):
     yt = load_data("node_distances/" + str(index_file))
     (x_train,y_train,x_test,y_test) = prepare_data(yt)
     pred, y_test = stateful_lstm(x_train, y_train, x_test, y_test, epoch=epoch)
-    print (pred)
-    print (y_test)
+    return (pred, y_test)
+    # print (pred)
+    # print (y_test)
 
 def load_data (file_name):
     """
