@@ -8,10 +8,10 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
 
-def run (index_file):
+def run (index_file, epoch = 10):
     yt = load_data("node_distances/" + str(index_file))
     (x_train,y_train,x_test,y_test) = prepare_data(yt)
-    pred, y_test = stateful_lstm(x_train, y_train, x_test, y_test, epoch=10)
+    pred, y_test = stateful_lstm(x_train, y_train, x_test, y_test, epoch=epoch)
     print (pred)
     print (y_test)
 
