@@ -11,7 +11,7 @@ from keras.layers.recurrent import LSTM
 def run (index_file):
     yt = load_data("node_distances/" + str(index_file))
     (x_train,y_train,x_test,y_test) = prepare_data(yt)
-    pred = stateful_lstm(x_train, y_train, x_test, y_test)
+    pred, y_test = stateful_lstm(x_train, y_train, x_test, y_test, epoch=10)
     print (pred)
     print (y_test)
 
@@ -102,7 +102,8 @@ def prepare_data (yt):
 
     return (x_train,y_train,x_test,y_test)
 
-def stateful_lstm (x_train, y_train, x_test, y_test):
+def stateful_lstm (x_train, y_train, x_test, y_test,
+                    epoch=10):
     fit2 = Sequential ()
     fit2.add (LSTM (output_dim = 4,
                     stateful = True,
@@ -119,7 +120,7 @@ def stateful_lstm (x_train, y_train, x_test, y_test):
         print "Fitting example ",i
         fit2.fit (x_train[start_point:end_point], 
                     y_train[start_point:end_point],
-                    nb_epoch = 1,
+                    nb_epoch = epoch,
                     batch_size = 1,
                     verbose = 2,
                     shuffle = True)
