@@ -31,7 +31,10 @@ def multi_run (epoch=10):
                     fp += 1
                 elif pred <= 0 and truth >= 0:
                     fn += 1
+        print ("**********************")
+        print ("Processing file " + str(i+1))
         print (tp,tn,fp,fn)
+        print ("**********************")
     return (tp,tn,fp,fn)
 
 def run (index_file, epoch = 10):
@@ -153,7 +156,7 @@ def stateful_lstm (x_train, y_train, x_test, y_test,
     start_point = 0
 
     for i in range (len (x_train[start_point:end_point])):
-        print "Fitting example ",i
+        print ("Fitting example " + str(i+1) + "/" + str(len (x_train[start_point:end_point])))
         fit2.fit (x_train[start_point:end_point], 
                     y_train[start_point:end_point],
                     nb_epoch = epoch,
