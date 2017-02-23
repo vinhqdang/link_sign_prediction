@@ -15,6 +15,8 @@ def multi_run (epoch=10):
     fp = 0
     fn = 0
     for i in range (20000):
+        if i < 226:
+            continue
         print ("Processing " + str (i+1))
         file_name = ("node_distances/" + str(i+1))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
@@ -144,11 +146,13 @@ def prepare_data (yt):
 def stateful_lstm (x_train, y_train, x_test, y_test,
                     epoch=10):
     fit2 = Sequential ()
-    fit2.add (LSTM (output_dim = 4,
+    fit2.add (LSTM (output_dim = 32,
                     stateful = True,
                     batch_input_shape=(1,5,1),
                     activation = 'tanh',
-                    inner_activation = 'hard_sigmoid'))
+                    inner_activation = 'hard_sigmoid',
+                    dropout_U = 0.5,
+                    dropout_W = 0.5))
     fit2.add (Dense (output_dim=1, activation='linear'))
     fit2.compile (loss = 'mean_squared_error', optimizer = 'rmsprop')
 
