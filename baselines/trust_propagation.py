@@ -55,13 +55,14 @@ def predict_guha (src_id, dst_id):
     for i in range (N):
         if src_lst[i] == src_id and dest_lst[i] != dst_id:
             for j in range (N):
-                if src_lst[j] == dest_lst[i] and src_lst[j] != sign_lst[i:
+                if src_lst[j] == dest_lst[i] and src_lst[j] != sign_lst[i]:
                     return -1
 
     end_time = time.time ()
     with open ("time_guha.txt", "a") as f:
         f.write (str (start_time - end_time) + '\n')
-    return -1
+    
+    return (-1)
 
 def get_features_leskovec (u,v):
     assert (len(src_lst) == len(dest_lst) == len(sign_lst))
@@ -124,21 +125,21 @@ def get_features_leskovec (u,v):
 
         for j in range(N):
             if src_lst[j] == w:
-                if targe = 0 and dest_lst[j] == v:
+                if targe == 0 and dest_lst[j] == v:
                     triangle_list[dire*8 + sign_lst[i]*4 + 0*2 + sign_lst[j]] += 1
                     continue
 
             if src_lst[j] == w:
-                if targe = 1 and dest_lst[j] == u:
+                if targe == 1 and dest_lst[j] == u:
                     triangle_list[dire*2 + sign_lst[i] + 0*8 + sign_lst[j]*4] += 1
 
             if dest_lst[j] == w:
-                if targe = 0 and src_lst[j] == v:
+                if targe == 0 and src_lst[j] == v:
                     triangle_list[dire*8 + sign_lst[i]*4 + 1*2 + sign_lst[j]] += 1
                     continue
 
             if dest_lst[j] == w:
-                if targe = 1 and src_lst[j] == u:
+                if targe == 1 and src_lst[j] == u:
                     triangle_list[dire*2 + sign_lst[i] + 1*8 + sign_lst[j]*4] += 1
                     continue
 
@@ -195,6 +196,47 @@ def main ():
 
     with open ("time_leskovec.txt", 'w') as f:
         f.write("ID\tfeature\tlearn\n")
+
+    with open ("acc_guha.txt", 'w') as f:
+        f.write("accuracy\n")
+
+    with open ("acc_lesk.txt", 'w') as f:
+        f.write("accuracy\n")
+
+    data_filename = "../data/wikipedia.csv"
+
+    data_cnt = 0
+    pred_cnt = 0
+
+    acc_guha = 0.0
+    acc_lesk = 0.0
+
+    with open (data_filename, 'r') as data_file:
+        next (data_file)
+        for line in data_file:
+            content = line.split ()
+            trustor = content [1]
+            trustee = content [2]
+            sign = content [3]
+
+            src_lst.append(int(trustor))
+            dest_lst.append (int(trustee))
+            sign_lst.append(int (sign))
+
+            data_cnt += 1
+            if data_cnt > 10000:
+                print ('Predict line ' + str(data_cnt))
+                pred_guha = predict_guha (trustor, trustee)
+                pred_lesk = predict_leskovec (trustor, trustee)
+                if pred_guha == sign:
+                    acc_guha += 1
+                if pred_lesk == sign:
+                    acc_lesk += 1
+                pred_cnt += 1
+                with open ("acc_guha.txt", 'a') as f:
+                    f.write (str(float(acc_guha) / pred_cnt) + '\n')
+                with open ("acc_lesk.txt", 'a') as f:
+                    f.write (str(float(acc_lesk) / pred_cnt) + '\n')
 
 if __name__ == '__main__':
     main()
