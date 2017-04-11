@@ -228,20 +228,21 @@ def main ():
 
             data_cnt += 1
             if data_cnt > 100:
-                print ('Predict line ' + str(data_cnt))
-                pred_guha = predict_guha (trustor, trustee)
-                pred_lesk = predict_leskovec (trustor, trustee)
-                if pred_guha == int (sign):
-                    acc_guha += 1
-                if int (pred_lesk[0]) == int (sign):
-                    print ('Lesk true')
-                    acc_lesk += 1
-                pred_cnt += 1
-                print (str(pred_guha) + ',' + str (pred_lesk[0]) + ',' + str(sign) + ',' + str(pred_cnt))
-                with open ("acc_guha.txt", 'a') as f:
-                    f.write (str(float(acc_guha) / pred_cnt) + '\n')
-                with open ("acc_lesk.txt", 'a') as f:
-                    f.write (str(float(acc_lesk) / pred_cnt) + '\n')
+                if sign != 0:
+                    print ('Predict line ' + str(data_cnt))
+                    pred_guha = predict_guha (trustor, trustee)
+                    pred_lesk = predict_leskovec (trustor, trustee)
+                    if pred_guha == int (sign):
+                        acc_guha += 1
+                    if int (pred_lesk[0]) == int (sign):
+                        print ('Lesk true')
+                        acc_lesk += 1
+                    pred_cnt += 1
+                    print (str(pred_guha) + ',' + str (pred_lesk[0]) + ',' + str(sign) + ',' + str(pred_cnt))
+                    with open ("acc_guha.txt", 'a') as f:
+                        f.write (str(float(acc_guha) / pred_cnt) + '\n')
+                    with open ("acc_lesk.txt", 'a') as f:
+                        f.write (str(float(acc_lesk) / pred_cnt) + '\n')
 
 if __name__ == '__main__':
     main()
