@@ -175,8 +175,8 @@ def stateful_lstm (x_train, y_train, x_test, y_test,
                     shuffle = True)
         fit2.reset_states ()
         end_time = time.time ()
-            with open ("time_lstm.txt",'a') as f:
-                f.write (str(end_time - start_time) + '\n')
+        with open ("time_lstm.txt",'a') as f:
+            f.write (str(end_time - start_time) + '\n')
 
     print (fit2.summary())
 
