@@ -8,19 +8,25 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
 
+import time
+
 def multi_run (epoch=10):
     run_cnt = 0
     tp = 0
     tn = 0
     fp = 0
     fn = 0
+    with open ('time_lstm.txt','w') as f:
+        f.write ('Time\n')
     for i in range (20000):
         if i < 226:
             continue
+        
         print ("Processing " + str (i+1))
         file_name = ("node_distances/" + str(i+1))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
             yt = load_data("node_distances/" + str(i+1))
+            start_time = time.time ()
             if len(yt) >= 10:
                 pred, truth = run (i + 1, epoch = epoch)
                 pred = pred[0][0]
@@ -33,6 +39,9 @@ def multi_run (epoch=10):
                     fp += 1
                 elif pred <= 0 and truth >= 0:
                     fn += 1
+            end_time = time.time ()
+            with open ("time_lstm.txt",'a') as f:
+                f.write (str(end_time - start_time) + '\n')
         print ("**********************")
         print ("Processing file " + str(i+1))
         print (tp,tn,fp,fn)
@@ -205,4 +214,6 @@ def stateful_lstm (x_train, y_train, x_test, y_test,
 # pred1 = scaler_y.inverse_transform (np.array(pred1).reshape((len(pred1),1)))
 
 # stateful LSTM
+if __name__ == '__main__':
+    multi_run()
 
