@@ -234,6 +234,7 @@ def main ():
                 if pred_guha == int (sign):
                     acc_guha += 1
                 if int (pred_lesk[0]) == int (sign):
+                    print ('Lesk true')
                     acc_lesk += 1
                 pred_cnt += 1
                 print (str(pred_guha) + ',' + str (pred_lesk[0]) + ',' + str(sign) + ',' + str(pred_cnt))
