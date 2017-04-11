@@ -26,7 +26,6 @@ def multi_run (epoch=10):
         file_name = ("node_distances/" + str(i+1))
         if os.path.isfile(file_name) and os.path.getsize(file_name) > 5:
             yt = load_data("node_distances/" + str(i+1))
-            start_time = time.time ()
             if len(yt) >= 10:
                 pred, truth = run (i + 1, epoch = epoch)
                 pred = pred[0][0]
@@ -38,10 +37,7 @@ def multi_run (epoch=10):
                 elif pred >= 0 and truth < 0:
                     fp += 1
                 elif pred <= 0 and truth >= 0:
-                    fn += 1
-            end_time = time.time ()
-            with open ("time_lstm.txt",'a') as f:
-                f.write (str(end_time - start_time) + '\n')
+                    fn += 1            
         print ("**********************")
         print ("Processing file " + str(i+1))
         print (tp,tn,fp,fn)
@@ -170,6 +166,7 @@ def stateful_lstm (x_train, y_train, x_test, y_test,
 
     for i in range (len (x_train[start_point:end_point])):
         print ("Fitting example " + str(i+1) + "/" + str(len (x_train[start_point:end_point])))
+        start_time = time.time()
         fit2.fit (x_train[start_point:end_point], 
                     y_train[start_point:end_point],
                     nb_epoch = epoch,
@@ -177,6 +174,9 @@ def stateful_lstm (x_train, y_train, x_test, y_test,
                     verbose = 2,
                     shuffle = True)
         fit2.reset_states ()
+        end_time = time.time ()
+            with open ("time_lstm.txt",'a') as f:
+                f.write (str(end_time - start_time) + '\n')
 
     print (fit2.summary())
 
