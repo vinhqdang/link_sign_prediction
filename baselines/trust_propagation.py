@@ -224,13 +224,13 @@ def main ():
             sign_lst.append(int (sign))
 
             data_cnt += 1
-            if data_cnt > 10000:
+            if data_cnt > 100:
                 print ('Predict line ' + str(data_cnt))
                 pred_guha = predict_guha (trustor, trustee)
                 pred_lesk = predict_leskovec (trustor, trustee)
-                if pred_guha == sign:
+                if pred_guha == int (sign):
                     acc_guha += 1
-                if pred_lesk == sign:
+                if pred_lesk == int (sign):
                     acc_lesk += 1
                 pred_cnt += 1
                 with open ("acc_guha.txt", 'a') as f:
