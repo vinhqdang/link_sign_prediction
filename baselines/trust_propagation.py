@@ -179,10 +179,13 @@ def predict_leskovec (src_id, dst_id):
 
     start_time = time.time ()
 
-    model = LogisticRegression()
-    model.fit(X_train, Y_train)
+    try:
+        model = LogisticRegression()
+        model.fit(X_train, Y_train)
 
-    pred = model.predict (X_test)
+        pred = model.predict (X_test)
+    except Exception, e:
+        pred = 1
     end_time = time.time ()
     times.append (end_time - start_time)
 
