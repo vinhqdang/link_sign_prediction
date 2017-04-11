@@ -236,6 +236,7 @@ def main ():
                 if pred_lesk == int (sign):
                     acc_lesk += 1
                 pred_cnt += 1
+                print (str(pred_guha) + ',' + str (pred_lesk) + ',' + str(sign) + ',' + str(pred_cnt))
                 with open ("acc_guha.txt", 'a') as f:
                     f.write (str(float(acc_guha) / pred_cnt) + '\n')
                 with open ("acc_lesk.txt", 'a') as f:
