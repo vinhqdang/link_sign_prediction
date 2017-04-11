@@ -6,6 +6,21 @@ see Guha et al. WWW 2004 for more information
 from sklearn.linear_model import LogisticRegression
 import time
 
+import argparse
+
+def parse_args():
+    '''
+    Parses the arguments.
+    '''
+    parser = argparse.ArgumentParser(description="Link sign prediction.")
+
+    parser.add_argument('--data_file', type = str, nargs='?', default='wikipedia.csv',
+                        help='starting file index.')
+
+    return parser.parse_args()
+
+args = parse_args()
+
 src_lst = []
 dest_lst = []
 sign_lst = []
@@ -60,7 +75,7 @@ def predict_guha (src_id, dst_id):
 
     end_time = time.time ()
     with open ("time_guha.txt", "a") as f:
-        f.write (str (start_time - end_time) + '\n')
+        f.write (str (end_time - start_time) + '\n')
     
     return (-1)
 
@@ -206,7 +221,7 @@ def main ():
     with open ("acc_lesk.txt", 'w') as f:
         f.write("accuracy\n")
 
-    data_filename = "../data/wikipedia.csv"
+    data_filename = "../data/" + args.data_file
 
     data_cnt = 0
     pred_cnt = 0
@@ -235,10 +250,10 @@ def main ():
                     if pred_guha == int (sign):
                         acc_guha += 1
                     if int (pred_lesk[0]) == int (sign):
-                        print ('Lesk true')
+                        # print ('Lesk true')
                         acc_lesk += 1
                     pred_cnt += 1
-                    print (str(pred_guha) + ',' + str (pred_lesk[0]) + ',' + str(sign) + ',' + str(pred_cnt))
+                    # print (str(pred_guha) + ',' + str (pred_lesk[0]) + ',' + str(sign) + ',' + str(pred_cnt))
                     with open ("acc_guha.txt", 'a') as f:
                         f.write (str(float(acc_guha) / pred_cnt) + '\n')
                     with open ("acc_lesk.txt", 'a') as f:
