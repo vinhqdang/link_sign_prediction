@@ -214,10 +214,10 @@ def main ():
     with open (data_filename, 'r') as data_file:
         next (data_file)
         for line in data_file:
-            content = line.split ()
-            trustor = content [1]
-            trustee = content [2]
-            sign = content [3]
+            content = line.split (',')
+            trustor = content [1].replace ('\"','')
+            trustee = content [2].replace ('\"','')
+            sign = content [3].replace ('\"','')
 
             src_lst.append(int(trustor))
             dest_lst.append (int(trustee))
