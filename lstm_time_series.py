@@ -157,8 +157,7 @@ def stateful_lstm (x_train, y_train, x_test, y_test,
                     activation = 'tanh',
                     inner_activation = 'hard_sigmoid',
                     dropout_U = 0.5,
-                    dropout_W = 0.5,
-                    recurrent_dropout = 0.5))
+                    dropout_W = 0.5))
     # fit2.add (LSTM (input_dim = 512,
     #                 output_dim = 512,
     #                 stateful = True,
