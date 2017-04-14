@@ -151,7 +151,14 @@ def prepare_data (yt):
 def stateful_lstm (x_train, y_train, x_test, y_test,
                     epoch=10):
     fit2 = Sequential ()
-    fit2.add (LSTM (output_dim = 32,
+    fit2.add (LSTM (output_dim = 512,
+                    stateful = True,
+                    batch_input_shape=(1,5,1),
+                    activation = 'tanh',
+                    inner_activation = 'hard_sigmoid',
+                    dropout_U = 0.5,
+                    dropout_W = 0.5))
+    fit2.add (LSTM (output_dim = 512,
                     stateful = True,
                     batch_input_shape=(1,5,1),
                     activation = 'tanh',
